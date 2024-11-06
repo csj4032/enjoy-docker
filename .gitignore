@@ -1,0 +1,8 @@
+.idea
+database/database-mysql/*
+database/database-postgres/*
+messaging/plugins/*
+workflow/dags/__pycache__/*
+workflow/logs/*
+workflow/output/*
+workflow/plugins/*

@@ -1,0 +1,19 @@
+{
+  "name": "mysql-source-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "tasks.max": "1",
+    "database.hostname": "mysql-primary",
+    "database.port": "3306",
+    "database.user": "debezium",
+    "database.password": "debezium",
+    "database.server.id": "184054",
+    "database.server.name": "genius-inventory",
+    "database.include.list": "genius",
+    "snapshot.mode": "initial",
+    "topic.prefix": "debezium.mysql.source",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka-broker-3:19092,kafka-broker-2:19092,kafka-broker-1:19092",
+    "schema.history.internal.kafka.topic": "debezium.mysql.source.schema.changes.inventory",
+    "include.schema.changes": "true"
+  }
+}
