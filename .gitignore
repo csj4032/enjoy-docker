@@ -1,6 +1,6 @@
 .idea
-database/database-mysql/*
-database/database-postgres/*
+database/database-mysql/data/*
+database/database-postgres/data/*
 messaging/plugins/*
 workflow/dags/__pycache__/*
 workflow/logs/*

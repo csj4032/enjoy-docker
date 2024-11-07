@@ -6,18 +6,6 @@ FLUSH PRIVILEGES;
 SHOW MASTER STATUS;
 
 USE genius;
-
-CREATE TABLE customers
-(
-    id   INT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(255)       NOT NULL,
-    PRIMARY KEY (id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
-
-INSERT INTO customers (name) VALUES ('Alice');
-
 ```
 
 ## Configure the Replica Server
@@ -30,8 +18,6 @@ CHANGE MASTER TO
     MASTER_LOG_POS=XXX;
 
 START SLAVE;
-
-SHOW SLAVE STATUS;
 
 SHOW SLAVE STATUS;
 ```
