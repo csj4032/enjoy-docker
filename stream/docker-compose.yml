@@ -12,12 +12,13 @@ services:
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager        
+        jobmanager.rpc.address: jobmanager  
+        parallelism.default: 2  
         rest.port: 8082
     networks:
       - shared_network
     volumes:
-      - shared-tmpfs:/tmp/iceberg
+      - ./warehouse:/tmp/warehouse
 
   taskmanager:
     build:
@@ -34,10 +35,12 @@ services:
         FLINK_PROPERTIES=
         jobmanager.rpc.address: jobmanager
         taskmanager.numberOfTaskSlots: 2
+        parallelism.default: 2  
+        rest.port: 8082
     networks:
       - shared_network
     volumes:
-      - shared-tmpfs:/tmp/iceberg
+      - ./warehouse:/tmp/warehouse
 
   sql-client:
     build:
@@ -56,7 +59,7 @@ services:
     networks:
       - shared_network
     volumes:
-      - shared-tmpfs:/tmp/iceberg
+      - ./warehouse:/tmp/warehouse
 
 networks:
   shared_network:

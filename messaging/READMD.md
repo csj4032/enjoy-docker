@@ -56,6 +56,13 @@ environment:
 5. Kafka Broker 는 Kafka Client 에게 advertised.listeners 설정을 반환
 6. Kafka Client 는 해당 주소로 계속 연결 시도 19092
 
-## Reference
+##  ~~ExtractNewRecordState 설정~~
+- ~~Debezium Connector 설정에 추가~~
+```
+"transforms": "unwrap",
+"transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+```
 
+## Reference
+- https://kafka.apache.org/documentation/#connect_transforms
 - https://debezium.io/documentation/reference/stable/connectors/mysql.html

@@ -1,4 +1,4 @@
-## Configure the Master Server
+## Configure the Primary Server
 ```sql
 ALTER USER 'genius'@'%' IDENTIFIED WITH mysql_native_password BY 'genius';
 GRANT REPLICATION SLAVE ON *.* TO 'genius'@'%';

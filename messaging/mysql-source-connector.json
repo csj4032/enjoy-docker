@@ -7,13 +7,18 @@
     "database.port": "3306",
     "database.user": "debezium",
     "database.password": "debezium",
-    "database.server.id": "184054",
+    "database.server.id": "1",
     "database.server.name": "genius-inventory",
     "database.include.list": "genius",
     "snapshot.mode": "initial",
     "topic.prefix": "debezium.mysql.source",
     "schema.history.internal.kafka.bootstrap.servers": "kafka-broker-1:9091,kafka-broker-2:9091,kafka-broker-3:9091",
     "schema.history.internal.kafka.topic": "debezium.mysql.source.schema.changes.inventory",
-    "include.schema.changes": "true"
+    "include.schema.changes": "true",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+    "decimal.handling.mode": "double"
   }
 }
