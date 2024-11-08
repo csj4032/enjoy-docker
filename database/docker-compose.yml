@@ -9,7 +9,6 @@ services:
       MYSQL_DATABASE: genius
       MYSQL_USER: genius
       MYSQL_PASSWORD: genius
-      TZ: Asia/Seoul
     volumes:
       - ./database-mysql/data/primary:/var/lib/mysql
       - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -34,7 +33,6 @@ services:
       MYSQL_DATABASE: genius
       MYSQL_USER: genius
       MYSQL_PASSWORD: genius
-      TZ: Asia/Seoul
     volumes:
       - ./database-mysql/data/replication:/var/lib/mysql
       - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql

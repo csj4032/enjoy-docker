@@ -9,6 +9,7 @@ INSERT INTO departments (name) VALUES ('Finance');
 INSERT INTO departments (name) VALUES ('Marketing');
 INSERT INTO departments (name) VALUES ('Sales');
 INSERT INTO departments (name) VALUES ('HR');
+INSERT INTO departments (name) VALUES ('Legal');
 
 CREATE TABLE IF NOT EXISTS employees
 (
@@ -29,6 +30,8 @@ INSERT INTO employees (name, department, salary) VALUES ('Heidi', 2, 90000.00);
 INSERT INTO employees (name, department, salary) VALUES ('Ivan', 3, 80000.00);
 INSERT INTO employees (name, department, salary) VALUES ('Judy', 4, 85000.00);
 INSERT INTO employees (name, department, salary) VALUES ('Kevin', 5, 70000.00);
+INSERT INTO employees (name, department, salary) VALUES ('Laura', 6, 75000.00);
+INSERT INTO employees (name, department, salary) VALUES ('Michael', 1, 80000.00);
 
 CREATE TABLE IF NOT EXISTS customers
 (
