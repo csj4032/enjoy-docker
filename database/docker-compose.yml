@@ -1,0 +1,90 @@
+services:
+  mysql-primary:
+    image: mysql:8.0.40
+    container_name: mysql-primary
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: genius
+      MYSQL_USER: genius
+      MYSQL_PASSWORD: genius
+    volumes:
+      - ./database-mysql/data/primary:/var/lib/mysql
+      - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --server-id=1 --log-bin=mysql-bin --binlog-format=row --default_authentication_plugin=mysql_native_password
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: always
+    networks:
+      - shared_network
+
+  mysql-replication:
+    image: mysql:8.0.40
+    container_name: mysql-replication
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: genius
+      MYSQL_USER: genius
+      MYSQL_PASSWORD: genius
+    volumes:
+      - ./database-mysql/data/replication:/var/lib/mysql
+      - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --server-id=2 --log-bin=mysql-bin --binlog-format=row --default_authentication_plugin=mysql_native_password
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: always
+    depends_on:
+      - mysql-primary
+    networks:
+      - shared_network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: genius
+      POSTGRES_PASSWORD: genius
+      POSTGRES_DB: postgres
+    volumes:
+      - ./database-postgres/data:/var/lib/postgresql/data
+      - ./database-postgres/script/postgres-init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "genius" ,"-d", "postgres" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+    networks:
+      - shared_network
+
+  redis:
+    image: redis:7.2-bookworm
+    container_name: redis
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+      start_period: 30s
+    restart: always
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true

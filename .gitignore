@@ -1,0 +1,15 @@
+.idea
+database/database-mysql/data/*
+database/database-postgres/data/*
+messaging/logs/kafka-broker-1
+messaging/logs/kafka-broker-2
+messaging/logs/kafka-broker-3
+messagings/logs/
+messaging/plugins/*
+messaging/secrets/*
+reducing/notebooks/*
+stream/warehouse/*/
+workflow/dags/__pycache__/*
+workflow/logs/*
+workflow/output/*
+workflow/plugins/*

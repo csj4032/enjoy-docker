@@ -1,0 +1,5 @@
+CREATE USER airflow WITH ENCRYPTED PASSWORD 'airflow';
+CREATE DATABASE airflow OWNER airflow;
+GRANT CONNECT ON DATABASE airflow TO airflow;
+GRANT USAGE ON SCHEMA public TO airflow;
+GRANT ALL ON SCHEMA public TO airflow;

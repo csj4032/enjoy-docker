@@ -1,0 +1,73 @@
+version: "2.2"
+services:
+  jobmanager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flink-jobmanager
+    user: flink:flink
+    ports:
+      - "8082:8082"
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager  
+        parallelism.default: 2  
+        rest.port: 8082
+    networks:
+      - shared_network
+    volumes:
+      - ./warehouse:/tmp/warehouse
+
+  taskmanager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flink-taskmanager
+    user: flink:flink
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+        parallelism.default: 2  
+        rest.port: 8082
+    networks:
+      - shared_network
+    volumes:
+      - ./warehouse:/tmp/warehouse
+
+  sql-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flink-sql-client
+    command: bin/sql-client.sh
+    depends_on:
+      - jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        rest.address: jobmanager
+        rest.port: 8082
+    networks:
+      - shared_network
+    volumes:
+      - ./warehouse:/tmp/warehouse
+
+networks:
+  shared_network:
+    external: true
+
+volumes:
+  shared-tmpfs:
+    driver: local
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"

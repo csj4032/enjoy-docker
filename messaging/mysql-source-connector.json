@@ -1,0 +1,30 @@
+{
+  "name": "mysql-source-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "tasks.max": "1",
+    "database.hostname": "mysql-primary",
+    "database.port": "3306",
+    "database.user": "debezium",
+    "database.password": "debezium",
+    "database.server.id": "1",
+    "database.server.name": "genius-inventory",
+    "database.include.list": "genius",
+    "snapshot.mode": "initial",
+    "topic.prefix": "debezium.mysql.source",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka-broker-1:19093,kafka-broker-2:19093,kafka-broker-3:19093",
+    "schema.history.internal.kafka.topic": "debezium.mysql.source.schema.changes.inventory",
+    "schema.history.internal.producer.security.protocol": "SASL_PLAINTEXT",
+    "schema.history.internal.producer.sasl.mechanism": "PLAIN",
+    "schema.history.internal.producer.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"admin\" password=\"admin\";",
+    "schema.history.internal.consumer.security.protocol": "SASL_PLAINTEXT",
+    "schema.history.internal.consumer.sasl.mechanism": "PLAIN",
+    "schema.history.internal.consumer.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"admin\" password=\"admin\";",
+    "include.schema.changes": "true",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false",
+    "decimal.handling.mode": "double"
+  }
+}

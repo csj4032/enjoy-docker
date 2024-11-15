@@ -1,0 +1,54 @@
+services:
+  spark-master:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+      - SPARK_MASTER_WEBUI_PORT=8084
+      - SPARK_MASTER_MEMORY=1G
+      - SPARK_MASTER_CORES=1
+    ports:
+      - "8084:8084"
+      - "7077:7077"
+    networks:
+      - shared_network
+
+  spark-worker-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spark-worker-1
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MATERS_WEBUI_URL=http://spark-master:8084
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=1
+    depends_on:
+      - spark-master
+    networks:
+      - shared_network
+
+  spark-worker-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spark-worker-2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MATERS_WEBUI_URL=http://spark-master:8084
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=1
+    depends_on:
+      - spark-master
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true
