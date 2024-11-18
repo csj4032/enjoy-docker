@@ -21,6 +21,10 @@
 ### Debezium Connector
 - Mysql -> Kafka 로 데이터를 전송하는 Connector
 
+## Searching
+- ElasticSearch
+- Kibana
+
 ## Stream
 
 ### Flink
