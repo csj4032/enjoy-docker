@@ -1,7 +1,7 @@
 services:
   spark-master:
     build:
-      context: .
+      context: ./spark
       dockerfile: Dockerfile
     container_name: spark-master
     environment:
@@ -9,8 +9,11 @@ services:
       - SPARK_MASTER_HOST=spark-master
       - SPARK_MASTER_PORT=7077
       - SPARK_MASTER_WEBUI_PORT=8084
-      - SPARK_MASTER_MEMORY=1G
       - SPARK_MASTER_CORES=1
+      - SPARK_MASTER_MEMORY=4G
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
     ports:
       - "8084:8084"
       - "7077:7077"
@@ -19,15 +22,15 @@ services:
 
   spark-worker-1:
     build:
-      context: .
+      context: ./spark
       dockerfile: Dockerfile
     container_name: spark-worker-1
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
       - SPARK_MATERS_WEBUI_URL=http://spark-master:8084
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=2
     depends_on:
       - spark-master
     networks:
@@ -35,15 +38,15 @@ services:
 
   spark-worker-2:
     build:
-      context: .
+      context: ./spark
       dockerfile: Dockerfile
     container_name: spark-worker-2
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
       - SPARK_MATERS_WEBUI_URL=http://spark-master:8084
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=2
     depends_on:
       - spark-master
     networks:
