@@ -12,7 +12,7 @@ services:
       MYSQL_USER: genius
       MYSQL_PASSWORD: genius
     volumes:
-      - ./database-mysql/data/primary:/var/lib/mysql
+      - mysql_primary_data:/var/lib/mysql
       - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
     command: --server-id=1 --log-bin=mysql-bin --binlog-format=row --default_authentication_plugin=mysql_native_password
     healthcheck:
@@ -38,7 +38,7 @@ services:
       MYSQL_USER: genius
       MYSQL_PASSWORD: genius
     volumes:
-      - ./database-mysql/data/replication:/var/lib/mysql
+      - mysql_replication_data:/var/lib/mysql
       - ./database-mysql/script/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
     command: --server-id=2 --log-bin=mysql-bin --binlog-format=row --default_authentication_plugin=mysql_native_password
     healthcheck:
@@ -53,7 +53,7 @@ services:
     networks:
       - shared_network
 
-  postgresql:
+  postgres:
     build:
       context: ./postgres
       dockerfile: Dockerfile
@@ -65,7 +65,7 @@ services:
       POSTGRES_PASSWORD: genius
       POSTGRES_DB: postgres
     volumes:
-      - ./database-postgres/data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
       - ./database-postgres/script/postgres-init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "genius" ,"-d", "postgres" ]
@@ -96,6 +96,9 @@ services:
       - shared_network
 
 volumes:
+  mysql_primary_data:
+  mysql_replication_data:
+  postgres_data:
   redis_data:
 
 networks:

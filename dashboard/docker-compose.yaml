@@ -16,11 +16,11 @@ services:
     volumes:
       - 'grafana_storage:/var/lib/grafana'
     networks:
-      - willog_network
+      - shared_network
 
 volumes:
   grafana_storage: { }
 
 networks:
-  willog_network:
+  shared_network:
     external: true
