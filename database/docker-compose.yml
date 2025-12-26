@@ -90,8 +90,13 @@ services:
       retries: 50
       start_period: 30s
     restart: always
+    volumes:
+      - redis_data:/data
     networks:
       - shared_network
+
+volumes:
+  redis_data:
 
 networks:
   shared_network:
