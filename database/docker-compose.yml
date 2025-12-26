@@ -53,7 +53,7 @@ services:
     networks:
       - shared_network
 
-  postgres:
+  postgresql:
     build:
       context: ./postgres
       dockerfile: Dockerfile

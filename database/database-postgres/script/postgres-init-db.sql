@@ -3,3 +3,9 @@ CREATE DATABASE airflow OWNER airflow;
 GRANT CONNECT ON DATABASE airflow TO airflow;
 GRANT USAGE ON SCHEMA public TO airflow;
 GRANT ALL ON SCHEMA public TO airflow;
+
+CREATE USER grafana WITH PASSWORD 'grafana';
+CREATE DATABASE grafana OWNER grafana;
+GRANT ALL PRIVILEGES ON DATABASE grafana TO grafana;
+GRANT USAGE ON SCHEMA public TO grafana;
+GRANT ALL ON SCHEMA public TO grafana;

@@ -1,0 +1,26 @@
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    environment:
+      - GF_SERVER_ROOT_URL=http://mmix.grafana.server/
+      - GF_PLUGINS_PREINSTALL=grafana-clock-panel
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=postgresql:5432
+      - GF_DATABASE_NAME=grafana
+      - GF_DATABASE_USER=grafana
+      - GF_DATABASE_PASSWORD=grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - 'grafana_storage:/var/lib/grafana'
+    networks:
+      - willog_network
+
+volumes:
+  grafana_storage: { }
+
+networks:
+  willog_network:
+    external: true
